@@ -19,7 +19,7 @@ nix build .# --impure
 
 if [ $? -eq 0 ]; then
     echo "Flashing..."
-    sync; umount /media/ivann/*; sudo dd if=result/disk1.raw of=$device bs=1M status=progress conv=fsync
+    sync; umount /media/$USER/*; sudo dd if=result/disk1.raw of=$device bs=1M status=progress conv=fsync
 fi
 
 # End of script

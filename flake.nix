@@ -25,6 +25,7 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-23.11";
     flake-utils.url = "github:numtide/flake-utils";
+    # Adjust this path to point your ghaf local repo !here
     ghaf.url = "path:/home/ivann/devel/NIXOS/ghaf";
   };
 
@@ -46,8 +47,16 @@
       {
         nixosConfigurations.x1custom-ghaf-debug = ghaf.nixosConfigurations.lenovo-x1-carbon-gen11-debug.extendModules {
           modules = [
+            ({pkgs, ...} :
+              {
+                # Add your packages !here
+                environment.systemPackages = [
+                  pkgs.vim
+                ];
+              })
             {
               users.users.root.openssh.authorizedKeys.keys = [
+                # Add your SSH public key !here
                 "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEa7sgJ6XQ58B5bHAc8dahWhCRVOFZ2z5pOCk4g+RLfw ivan.nikolaenko@unikie.com"
               ];
             }
