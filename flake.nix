@@ -52,6 +52,7 @@
                 # Add your packages !here
                 environment.systemPackages = [
                   pkgs.vim
+                  pkgs.strace
                 ];
               })
             {
