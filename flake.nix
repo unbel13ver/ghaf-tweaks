@@ -50,9 +50,11 @@
             ({pkgs, ...} :
               {
                 # Add your packages !here
-                environment.systemPackages = [
-                  pkgs.vim
-                  pkgs.strace
+                environment.systemPackages = with pkgs; [
+                  vim
+                  strace
+                  parted
+                  e2fsprogs
                 ];
               })
             {

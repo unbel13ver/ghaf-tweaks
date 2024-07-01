@@ -209,8 +209,8 @@
         "treefmt-nix": "treefmt-nix"
       },
       "locked": {
-        "lastModified": 1718801724,
-        "narHash": "sha256-nBD5AtfoeJq5TYsfFEU9nXTvkAMGY2Nb24T9GSmuGvY=",
+        "lastModified": 1719579089,
+        "narHash": "sha256-laEJORRD/dgXr5aqjlRuVOqBfUE/HGdrIq/Ag7mWArk=",
         "path": "/home/ivann/devel/NIXOS/ghaf",
         "type": "path"
       },
