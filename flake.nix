@@ -55,6 +55,7 @@
                   strace
                   parted
                   e2fsprogs
+                  gptfdisk
                 ];
               })
             {
