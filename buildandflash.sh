@@ -19,13 +19,19 @@ time nix build .# --impure
 
 if [ $? -eq 0 ] && [[ -n "$device" ]]; then
     echo "Wiping filesystem..."
-    # Wipe first 100MB of disk
-    sudo dd if=/dev/zero of=$device bs=100M count=1 status=progress conv=fsync
-    sectors=$(sudo fdisk -l $device | head -n 1 |  awk '{print $7}')
-    # Wipe last ~100MB of disk
-    sudo dd if=/dev/zero of=$device seek=$((sectors - 204800))
+    SECTOR=512
+    # 10 MiB in 512-byte sectors
+    MIB_TO_SECTORS=20480
+    # Disk size in 512-byte sectors
+    SECTORS=$(sudo blockdev --getsz "$device")
+    # Unmount possible mounted filesystems
+    sync; sudo umount -q "$device"* || true;
+    # Wipe first 10MiB of disk
+    sudo dd if=/dev/zero of="$device" bs="$SECTOR" count="$MIB_TO_SECTORS" conv=fsync status=none
+    # Wipe last 10MiB of disk
+    sudo dd if=/dev/zero of="$device" bs="$SECTOR" count="$MIB_TO_SECTORS" seek="$((SECTORS - MIB_TO_SECTORS))" conv=fsync status=none
     echo "Flashing..."
-    sync; umount /media/$USER/*; zstdcat result/disk1.raw.zst | sudo dd of=$device bs=100M status=progress conv=fsync
+    zstdcat result/disk1.raw.zst | sudo dd of=$device bs=32M status=progress conv=fsync
 fi
 
 # End of script
