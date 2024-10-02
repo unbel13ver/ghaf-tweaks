@@ -12,7 +12,7 @@ fi
 device=$1
 
 echo "Update flake.lock file..."
-nix flake lock --update-input ghaf
+nix flake update ghaf
 
 echo "Building..."
 time nix build .# --impure

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo "Update flake.lock file..."
-nix flake lock --update-input ghaf
+nix flake update ghaf
 
 echo "Building..."
 # Replace default ghaf-host-my hostname with the actual IP or hostname !here
