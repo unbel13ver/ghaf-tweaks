@@ -56,6 +56,7 @@
                   parted
                   e2fsprogs
                   gptfdisk
+                  lsof
                 ];
               })
             {
