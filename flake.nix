@@ -63,10 +63,12 @@
               users.users.root.openssh.authorizedKeys.keys = [
                 # Add your SSH public key !here
                 "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEa7sgJ6XQ58B5bHAc8dahWhCRVOFZ2z5pOCk4g+RLfw ivan.nikolaenko@unikie.com"
+                "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGi5EE8vbnLUC5zzCCwaI2s+JVHi86jQwUYpPNF3/AJc ivan@ono-sendai"
               ];
               users.users."ghaf".openssh.authorizedKeys.keys = [
                 # Add your SSH public key !here
                 "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEa7sgJ6XQ58B5bHAc8dahWhCRVOFZ2z5pOCk4g+RLfw ivan.nikolaenko@unikie.com"
+                "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGi5EE8vbnLUC5zzCCwaI2s+JVHi86jQwUYpPNF3/AJc ivan@ono-sendai"
               ];
             }
           ];
