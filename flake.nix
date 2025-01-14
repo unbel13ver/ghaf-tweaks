@@ -57,6 +57,7 @@
                   e2fsprogs
                   gptfdisk
                   lsof
+                  jq
                 ];
               })
             {
