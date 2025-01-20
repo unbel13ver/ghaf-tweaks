@@ -47,7 +47,7 @@
       {
         nixosConfigurations.x1custom-ghaf-debug = ghaf.nixosConfigurations.lenovo-x1-carbon-gen11-debug.extendModules {
           modules = [
-            ({pkgs, ...} :
+            ({pkgs, lib, ...} :
               {
                 # Add your packages !here
                 environment.systemPackages = with pkgs; [
@@ -59,19 +59,19 @@
                   lsof
                   jq
                 ];
-              })
-            {
-              users.users.root.openssh.authorizedKeys.keys = [
+
+	      ghaf.graphics.labwc.autolock.enable = lib.mkOverride 10 false;
+              users.users.root.openssh.authorizedKeys.keys = lib.mkForce [
                 # Add your SSH public key !here
                 "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEa7sgJ6XQ58B5bHAc8dahWhCRVOFZ2z5pOCk4g+RLfw ivan.nikolaenko@unikie.com"
                 "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGi5EE8vbnLUC5zzCCwaI2s+JVHi86jQwUYpPNF3/AJc ivan@ono-sendai"
               ];
-              users.users."ghaf".openssh.authorizedKeys.keys = [
+              users.users."ghaf".openssh.authorizedKeys.keys = lib.mkForce [
                 # Add your SSH public key !here
                 "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEa7sgJ6XQ58B5bHAc8dahWhCRVOFZ2z5pOCk4g+RLfw ivan.nikolaenko@unikie.com"
                 "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGi5EE8vbnLUC5zzCCwaI2s+JVHi86jQwUYpPNF3/AJc ivan@ono-sendai"
               ];
-            }
+            })
           ];
         };
         packages.x86_64-linux.default = self.nixosConfigurations.x1custom-ghaf-debug.config.system.build.diskoImages;
