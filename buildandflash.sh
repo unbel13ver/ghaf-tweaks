@@ -27,8 +27,10 @@ if [ $? -eq 0 ] && [[ -n "$device" ]]; then
     # Unmount possible mounted filesystems
     sync; sudo umount -q "$device"* || true;
     # Wipe first 10MiB of disk
+    echo "Wiping first 10 MiB, bs=$SECTOR, count=$MIB_TO_SECTORS"
     sudo dd if=/dev/zero of="$device" bs="$SECTOR" count="$MIB_TO_SECTORS" conv=fsync status=none
     # Wipe last 10MiB of disk
+    echo "Wiping last 10 MiB, bs=$SECTOR, seek=$((SECTORS - MIB_TO_SECTORS))"
     sudo dd if=/dev/zero of="$device" bs="$SECTOR" count="$MIB_TO_SECTORS" seek="$((SECTORS - MIB_TO_SECTORS))" conv=fsync status=none
     echo "Flashing..."
     zstdcat result/disk1.raw.zst | sudo dd of=$device bs=32M status=progress conv=fsync

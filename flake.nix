@@ -47,7 +47,14 @@
       {
         nixosConfigurations.x1custom-ghaf-debug = ghaf.nixosConfigurations.lenovo-x1-carbon-gen11-debug.extendModules {
           modules = [
-            ({pkgs, lib, ...} :
+            ({pkgs, lib, config, ...} :
+              let
+                authKeys = [
+                  # Add your SSH public key !here
+                  "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEa7sgJ6XQ58B5bHAc8dahWhCRVOFZ2z5pOCk4g+RLfw ivan.nikolaenko@unikie.com"
+                  "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGi5EE8vbnLUC5zzCCwaI2s+JVHi86jQwUYpPNF3/AJc ivan@ono-sendai"
+                ];
+              in
               {
                 # Add your packages !here
                 environment.systemPackages = with pkgs; [
@@ -60,17 +67,16 @@
                   jq
                 ];
 
-	      ghaf.graphics.labwc.autolock.enable = lib.mkOverride 10 false;
-              users.users.root.openssh.authorizedKeys.keys = lib.mkForce [
-                # Add your SSH public key !here
-                "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEa7sgJ6XQ58B5bHAc8dahWhCRVOFZ2z5pOCk4g+RLfw ivan.nikolaenko@unikie.com"
-                "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGi5EE8vbnLUC5zzCCwaI2s+JVHi86jQwUYpPNF3/AJc ivan@ono-sendai"
-              ];
-              users.users."ghaf".openssh.authorizedKeys.keys = lib.mkForce [
-                # Add your SSH public key !here
-                "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEa7sgJ6XQ58B5bHAc8dahWhCRVOFZ2z5pOCk4g+RLfw ivan.nikolaenko@unikie.com"
-                "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGi5EE8vbnLUC5zzCCwaI2s+JVHi86jQwUYpPNF3/AJc ivan@ono-sendai"
-              ];
+                # Disable screen locking
+                ghaf.graphics.labwc.autolock.enable = lib.mkOverride 10 false;
+
+                # Remove backdoors and set up own SSH keys
+                users.users.root.openssh.authorizedKeys.keys = lib.mkForce authKeys;
+                users.users."ghaf".openssh.authorizedKeys.keys = lib.mkForce authKeys;
+                microvm.vms.net-vm.config.config.users.users.root.openssh.authorizedKeys.keys = lib.mkOverride 10 authKeys;
+                microvm.vms.net-vm.config.config.users.users."ghaf".openssh.authorizedKeys.keys = lib.mkOverride 10 authKeys;
+                microvm.vms.gui-vm.config.config.users.users.root.openssh.authorizedKeys.keys = lib.mkOverride 10 authKeys;
+                microvm.vms.gui-vm.config.config.users.users."ghaf".openssh.authorizedKeys.keys = lib.mkOverride 10 authKeys;
             })
           ];
         };
